@@ -1,0 +1,14 @@
+{
+    "name": "application/trackseg",
+    "description": "Trackseg",
+    "type": "project",
+    "require": {
+        "kriansa/openboleto": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "jpcastro4",
+            "email": "jp@grupodifference.com"
+        }
+    ]
+}
