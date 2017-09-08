@@ -50,7 +50,7 @@ class Admin extends CI_Controller {
 
 		if(!empty($bloqueioID)){
 			
-			$data['bloqueio'] = $this->admin-getBloqueio($bloqueioID);
+			$data['bloqueio'] = $this->admin->getBloqueio($bloqueioID);
 		}
 
 		$data['mensagem'] = $this->session->flashdata('mensagem');
@@ -69,7 +69,7 @@ class Admin extends CI_Controller {
 		$data['titulo_2'] = 'Tags';
 
 		if(!empty($tagID)){
-			$data['tag'] = $this->admin-getTag($tagID);
+			$data['tag'] = $this->admin->getTag($tagID);
 		}
 
 		$data['tags'] = $this->admin->lista_tags();
@@ -78,7 +78,7 @@ class Admin extends CI_Controller {
 		$data['mensagem_erro'] = $this->session->flashdata('mensagem_erro');
  		
  		$this->load->view('admin/templates/header', $data);
-        $this->load->view('admin/clientes');
+        $this->load->view('admin/tags');
         $this->load->view('admin/templates/footer');
 	}
 

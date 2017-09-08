@@ -65,7 +65,9 @@ $route['esqueci'] = 'index/esqueci';
 $route['sair'] = 'index/sair';
 
 $route['admin/configuracoes/bloqueios'] = 'admin/bloqueios';
+$route['admin/configuracoes/bloqueios/(:num)'] = 'admin/bloqueios/$1';
 $route['admin/configuracoes/tags'] = 'admin/tags';
+$route['admin/configuracoes/tags/(:num)'] = 'admin/tags/$1';
 
 $route['dashboard/administrativo/usuarios'] = 'dashboard/usuarios';
 $route['dashboard/administrativo/usuarios/novo'] = 'dashboard/novo_usuario';

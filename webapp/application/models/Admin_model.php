@@ -77,9 +77,10 @@ class Admin_model extends CI_Model{
         }
         return false;
     }
+
     public function getBloqueio($bloqueioID){
         $this->db->where('bloqueioID',$bloqueioID);
-        $resultado = $this->db->get('bloqueioes');
+        $resultado = $this->db->get('bloqueios');
         if($resultado->num_rows() > 0 ){
             return $resultado->row();
         }

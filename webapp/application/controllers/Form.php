@@ -55,9 +55,10 @@ class Form extends CI_Controller {
 
 			$this->db->where('tagID',$tagID);
 			$this->db->update('tags', $campos );
-			$this->session->set_flashdata('mensagem','Tag alerada');
+			$this->session->set_flashdata('mensagem','Tag alterada');
 			redirect('admin/configuracoes/tags');			
 		}else{
+			//$campos['tagCor'] = randomColor();
 			$this->db->insert('tags', $campos );
 			$this->session->set_flashdata('mensagem','Tag inserida');
 			redirect('admin/configuracoes/tags');
