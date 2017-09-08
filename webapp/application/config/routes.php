@@ -69,6 +69,9 @@ $route['admin/configuracoes/bloqueios/(:num)'] = 'admin/bloqueios/$1';
 $route['admin/configuracoes/tags'] = 'admin/tags';
 $route['admin/configuracoes/tags/(:num)'] = 'admin/tags/$1';
 
+$route['admin/clientes'] = 'admin/clientes';
+$route['admin/cliente/(:num)'] = 'admin/cliente/$1';
+
 $route['dashboard/administrativo/usuarios'] = 'dashboard/usuarios';
 $route['dashboard/administrativo/usuarios/novo'] = 'dashboard/novo_usuario';
 $route['dashboard/administrativo/usuarios/editar-usuario/(:num)'] = 'dashboard/editar_usuario/$1';

@@ -9,10 +9,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/lib/noty.css" />
     <script src="<?php echo base_url()?>assets/lib/noty.js"></script>
 
-    <script src="<?php echo base_url()?>assets/js/jquery.ajaxfileupload.js"></script>
- 
+    <!-- <script src="<?php echo base_url()?>assets/js/jquery.ajaxfileupload.js"></script> -->
     <script type="text/javascript">
-
+        
         var app = {
 
             news: function(message,typeNews){
@@ -28,6 +27,45 @@
                         }).show();
             }
         }
+
+
+    </script>
+
+    <script type="text/javascript">
+
+    $('input#cpfcnpj').on('keyup', function(){
+
+        var tamanho = $(this).val().length,
+            cnpj = $(this).val()
+
+        if(tamanho == 14 ){
+            $('.loading').fadeIn();
+            setTimeout( function(){         
+
+                $.get('https://www.receitaws.com.br/v1/cnpj/'+cnpj, function(data){
+
+                    if(data.status == 'ERROR'){
+                        $('.loading').fadeOut()
+                        app.news(data.message,'error')
+                    }
+
+                    if(data.status == 'OK'){
+                        $('.loading').fadeOut()
+                        $('input[name=clienteNomeRazao]').val(data.nome)
+                    }
+                },'jsonp')
+
+            },2000)
+        }
+    })
+
+    $('.modal').modal('show')
+    
+    </script>
+ 
+    <script type="text/javascript">
+
+        
       
  
 

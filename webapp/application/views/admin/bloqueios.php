@@ -70,9 +70,9 @@
                                 </div>
                                  
                                 <div class="col-3 text-right">
-                                    <a href="bloqueios/<?php echo $bloqueio->bloqueioID ?>"><i class="flaticon-draw"></i></a>
+                                    <a href="bloqueios/<?php echo $bloqueio->bloqueioID ?>" class="btn btn-theme"><i class="flaticon-draw"></i></a>
 
-                                    <i class="flaticon-interface-2"></i>
+                                    <a href="#" class="btn btn-theme"><i class="flaticon-interface-2"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,7 @@
         <!-- Only needed Bootstrap bits + custom CSS in one file -->
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,800" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,600,800" rel="stylesheet">
         <script src="https://use.fontawesome.com/7cbf6b3d85.js"></script>
 
         <script type="text/javascript">var ajaxUrl = '<?php echo base_url('ajax_functions/'); ?>'; </script>
@@ -26,7 +26,7 @@
         <!-- <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootbox/sweet-alert.min.css" /> -->
         <link rel="stylesheet" href="<?php echo base_url()?>assets/css/theme.css">
         <link rel="stylesheet" href="<?php echo base_url()?>assets/font/flaticon.css">
-        <link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css">  
+        <link rel="stylesheet" href="<?php echo base_url()?>assets/lib/animate.css">  
         <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/rede.css"> -->
 
 
@@ -76,17 +76,16 @@
 
   <!-- INICIO TEMPLATE  -->
 <div class="container-fluid head sticky-top bg-azul">
-    <div class="row">
-        <div class="col-10 col-md-3 py-3" >
-            <div class="row align-items-stretch text-center ">
+    <div class="row align-items-center">
+        <div class="col-10 col-md-3" >
+            <div class="row text-center ">
                 <button class="navbar-toggler navbar-toggler-left hidden-sm-up align-items-center" type="button" data-toggle="collapse" data-target="#menuprincipal" aria-expanded="false" aria-controls="menuprincipal" aria-expanded="false" aria-label="Toggle navigation"><span class="fa fa-bars font-branco"></span></button>
                 <div class="title title-1 font-branco align-items-center col-12">dashcont</div>
-                
             </div>
         </div>
 
 
-        <div class="col-12 col-md-6 hidden-sm-down align-items-center">
+        <div class="col-12 col-md-6 hidden-sm-down">
             <div class="row">
                 <div class="col-12">
                     <ul class="menu-head">
@@ -99,10 +98,10 @@
             </div>
         </div>
         <?php //if(!$this->agent->is_mobile() ): ?>
-        <div class="col-2 col-md-3 py-3">
-            <div class="row align-items-center">
-                <div class="col-12">
-                    <div class="title title-2 col-12 font-branco text-center"><i class="flaticon-music pull-left"></i> <?php echo $titulo_1 ?> </div>
+        <div class="col-2 col-md-3">
+            <div class="row text-center">
+                <div class="col-12 ">
+                    <div class="title title-2 col-12 font-branco "> <?php echo $titulo_1 ?> </div>
                 </div>
             </div>
         </div>

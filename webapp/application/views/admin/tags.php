@@ -37,8 +37,8 @@
                         
                         <div class="lista-item">
                             <div class="row">
-                                <div class="col-12" style="background-color: <?php echo $tag->tagCor ?>">
-                                    <div class="lista-item-title font-branco"><?php echo $tag->tagNome ?></div>
+                                <div class="col-12" >
+                                    <i class="fa fa-tag" style="color: <?php echo $tag->tagCor ?>"></i><div class="lista-item-title"><?php echo $tag->tagNome ?></div>
                                 </div>
                                  
                                 <!-- <div class="col-3 text-right">

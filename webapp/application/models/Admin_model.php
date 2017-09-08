@@ -104,11 +104,33 @@ class Admin_model extends CI_Model{
         return false;
     }
 
+    public function lista_clientes(){
+        $resultado = $this->db->get('clientes');
+        if($resultado->num_rows() > 0 ){
+            return $resultado->result();
+        }
+        return false;
+    }
 
-
-
-
-
+    public function lista_arquivo($clienteID){
+        $this->db->where('clienteID',$clienteID);
+        $resultado = $this->db->get('clientes_arquivo');
+        if($resultado->num_rows() > 0 ){
+            return $resultado->result();
+        }
+        return false;
+    }
+    public function getCliente($clienteCpfCnpj){
+        $this->db->where('clienteCpfCnpj',$clienteCpfCnpj);
+        $resultado = $this->db->get('clientes');
+        if($resultado->num_rows() > 0 ){
+            $return = $resultado->row();
+            $return->arquivo = $this->lista_arquivo($return->clienteID);
+            return  $return;
+        }
+        return false;
+    }
+   
 
     public function getRastreador($rastreadorID){
 
@@ -151,30 +173,7 @@ class Admin_model extends CI_Model{
     }
 
 
-    public function listaClientes(){
-
-        $resultado = $this->db->get('clientes');
-
-        if($resultado->num_rows() > 0 ){
-
-            return $resultado->result();
-        }
-
-        return false;
-    }
-
-    public function getCliente($clienteID){
-
-        $this->db->where('clienteID',$clienteID);
-        $resultado = $this->db->get('clientes');
-
-        if($resultado->num_rows() > 0 ){
-
-            return $resultado->row();
-        }
-
-        return false;
-    }
+    
 
      public function getVeiculos($clienteID){
         $this->db->where('clienteID', $clienteID);

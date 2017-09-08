@@ -67,7 +67,7 @@ class Form extends CI_Controller {
 
  	public function clientes($clienteCpfCnpj=null){
  		$campos = $this->input->post();
-
+ 		$campos['clienteDataUltAlt'] = date('Y-m-d H:i:s');
  		if(!empty($clienteCpfCnpj)){
 
 			$this->db->where('clienteCpfCnpj',$clienteCpfCnpj);

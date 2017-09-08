@@ -82,14 +82,33 @@ class Admin extends CI_Controller {
         $this->load->view('admin/templates/footer');
 	}
 
+	public function clientes($clienteCpfCnpj=null){
+
+		$data['titulo'] = 'Administrativo - Cliente';
+        $data['titulo_1'] = 'Administrativo';
+		$data['titulo_2'] = 'Cliente';
+
+		if(!empty($clienteCpfCnpj)){
+			$data['cliente'] = $this->admin->getCliente($clienteCpfCnpj);
+		}
+		
+		$data['clientes'] = $this->admin->lista_clientes();
+
+		$data['mensagem'] = $this->session->flashdata('mensagem');
+		$data['mensagem_erro'] = $this->session->flashdata('mensagem_erro');
+ 		
+ 		$this->load->view('admin/templates/header', $data);
+        $this->load->view('admin/clientes');
+        $this->load->view('admin/templates/footer');
+	}
+
 	public function cliente($clienteCpfCnpj=null){
 
 		$data['titulo'] = 'Administrativo - Cliente';
         $data['titulo_1'] = 'Administrativo';
 		$data['titulo_2'] = 'Cliente';
 
-		$data['cliente'] = $this->admin->getCliente($clienteID);
-		$data['veiculos'] = $this->admin->getVeiculos($clienteID);
+		$data['cliente'] = $this->admin->getCliente($clienteCpfCnpj);
 
 		$data['mensagem'] = $this->session->flashdata('mensagem');
 		$data['mensagem_erro'] = $this->session->flashdata('mensagem_erro');
