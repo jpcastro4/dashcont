@@ -35,7 +35,6 @@
 			}
 		});
 
-
 		
 		function onChange(e) {
 			var $element = $(e.target),

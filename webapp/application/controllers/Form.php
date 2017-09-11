@@ -1,4 +1,7 @@
 <?php
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Form extends CI_Controller {
@@ -82,7 +85,85 @@ class Form extends CI_Controller {
 		}
  	}
 
+ 	public function awsCredential(){
+ 		
+ 		$credentials = new Aws\Credentials\Credentials('AKIAJLFAEOQ2E6TG24AA', 'DjEcSxbz+0I7rgy/577l+f+7MOwwPLcUnl/l/Nva');		 
 
+ 		$client = new Aws\S3\S3Client([
+		    'version'     => 'latest',
+		    'region'      => 'sa-east-1',
+		    'credentials' => $credentials
+		]);
+ 		
+		return $client;
+		 
+ 	}
+
+ 	public function uploadFileS3($cliente,$filename,$file,$nome){
+
+ 		$client 	= $this->awsCredential();
+
+ 		$keyName 	= md5($filename).rand(5,15);
+
+ 		$bucket 	= 'dashcont';
+		$key 		= $cliente.'/'.$keyName;
+
+		$fileData 	= base64_decode(end(explode(",", $file)));
+		$upload 	= $client->upload($bucket, $key, $fileData, 'public-read');
+		$caminho 	= $upload->get('ObjectURL');
+
+ 		//$exist		= $client->getObjectInfo()
+
+ 		// if($exist){
+ 			
+ 		// }else{
+ 						
+ 		// }
+
+ 		$this->db->where('clienteCpfCnpj',$cliente);
+ 		$clienteID = $this->db->get('clientes')->row()->clienteID;
+ 		
+		$insert = array( 'clienteID'=>$clienteID,'arquivoNome'=>$nome,'arquivoAwsKey'=>$keyName,'arquivoCaminho'=>$caminho,'arquivoDataEnvio'=>date('Y-m-d H:i:s') );
+
+	 	$this->db->insert('clientes_arquivo', $insert );
+
+	 	return true;
+
+
+ 		// 	$result = $client->putObject(array(
+		//     'Bucket' => 'dashcont',
+		//     'Key'    => $cliente.'/'.$filename,
+		//     'SourceFile' => $file_base64,
+		//     'ACL' 	 => 'public-read',
+		// ));
+
+		// Access parts of the result object
+		// echo $result['Expiration'] . "\n";
+		// echo $result['ServerSideEncryption'] . "\n";
+		// echo $result['ETag'] . "\n";
+		// echo $result['VersionId'] . "\n";
+		// echo $result['RequestId'] . "\n";
+
+		// Get the URL the object can be downloaded from
+		// return $result['ObjectURL'];
+
+
+ 	}
+
+ 	public function arquivo($clienteCpfCnpj){
+ 
+ 		$campos = (object) $this->input->post();
+
+ 		foreach ($campos as $items) {
+
+ 			$item = (object) $items;
+
+ 	 		$update = $this->uploadFileS3($clienteCpfCnpj,$item->filename,$item->file,$item->nome);
+ 		}
+
+ 		redirect('admin/cliente/'.$clienteCpfCnpj);
+
+ 	}
 
 
 

@@ -80,8 +80,8 @@
             <div class="painel-content row px-0">
                 <div class="col-12">
                     <div class="lista">
-                        <?php if(!empty($clientes)):
-                            foreach ($clientes->arquivo as $doc): ?>
+                        <?php if(!empty($cliente->arquivo)):
+                            foreach ($cliente->arquivo as $doc): ?>
                                 <div class="lista-item mb-2">
                                     <div class="row align-items-center">
                                         <div class="col-10 ">
@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="col-2 text-right">
                                             <!-- <a href="<?php echo base_url('admin/clientes/'.$cliente->clienteCpfCnpj )?>" class="btn btn-theme"><span class="fa fa-search-plus"></span></a> -->
-                                            <a href="" class="btn btn-theme"><span class="fa fa-trash" ></span></a>
+                                            <a href="<?php echo $doc->arquivoCaminho ?>" target="_blank" class="btn btn-theme"><span class="flaticon-multimedia" ></span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -99,14 +99,14 @@
                     </div>
                     
                 </div>
-                <div class="col-12">
+                <div class="col-12 mt-4">
                     <div class="upload-area">
                         <i class="flaticon-upload"></i>
                         <p><strong>Solte os arquivos aqui ou clique para fazer o upload</strong><br/>
                         Para fazer o upload utilize a ultima versão do Google Chrome.<br/>
                         <strong>Máx. de 2Mb</strong></p>
 
-                        <input type="file" class="files-upload" >
+                        <!-- <input type="file" class="files" >  -->
                     </div>
                 </div>
             </div>
@@ -114,7 +114,70 @@
     </div>
 </div>
 
-<div class="modal fade">
+<div class="modal animated bounceIn">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i aria-hidden="true" class="flaticon-error"> </i>
+                </button>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header mb-5">
+                <h5 class="modal-title"><i class="flaticon-upload"></i> Arquivos para processar</h5>
+                
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo base_url()?>form/arquivo<?php if(!empty($cliente)){ echo '/'.$cliente->clienteCpfCnpj;} ?>" method="post" enctype="multipart/form-data" >
+                <div class="painel">
+                    <div class="painel-block">
+                        <div class="painel-content row px-0">
+                            <div class="row w-100 text-center lista-head">
+                                <div class="col-12 col-md-5">Nome original</div>
+                                <div class="col-12 col-md-5">Renomeie o arquivo</div>
+                                <div class="col-12 col-md-2"> </div>
+                            </div>
+                            <div class="w-100 px-0">
+                                <hr class="separador-cinza">
+                            </div>
+                            <div class="lista">
+                                
+                            </div>
+
+                            <div class="w-100 px-0">
+                                <hr class="separador-cinza">
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-theme btn-super process" type="submit" >Processar arquivos</button>
+                            </div>
+                         
+                            <div class="col-12">
+                                <button class="btn btn-link btn-width" data-dismiss="modal">Cancelar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100 px-0">
+                    
+                </div>
+            </div>
+
+            <div class="col-12">
+                    <div class="upload-area">
+                        <i class="flaticon-upload"></i>
+                        <p><strong>Solte os arquivos aqui ou clique para fazer o upload</strong><br/>
+                        Para fazer o upload utilize a ultima versão do Google Chrome.<br/>
+                        <strong>Máx. de 2Mb</strong></p>
+
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="modal fade"> 
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <i aria-hidden="true" class="flaticon-error"> </i>
                 </button>
@@ -128,8 +191,17 @@
                 <div class="painel">
                     <div class="painel-block">
                         <div class="painel-content row px-0">
+                            <div class="row w-100 text-center lista-head">
+                                <div class="col-12 col-md-3">Nome do arquivo</div>
+                                <div class="col-12 col-md-3">Tags</div>
+                                <div class="col-12 col-md-3">Vencimento</div>
+                                <div class="col-12 col-md-3">Ativar recálculo</div>
+                            </div>
+                            <div class="w-100 px-0">
+                                <hr class="separador-cinza">
+                            </div>
                             <div class="lista">
-                                <div class="lista-item-grade"></div>
+                                
                             </div>
 
                             <div class="w-100 px-0">
@@ -152,6 +224,17 @@
                     
                 </div>
             </div>
+
+            <div class="col-12">
+                    <div class="upload-area">
+                        <i class="flaticon-upload"></i>
+                        <p><strong>Solte os arquivos aqui ou clique para fazer o upload</strong><br/>
+                        Para fazer o upload utilize a ultima versão do Google Chrome.<br/>
+                        <strong>Máx. de 2Mb</strong></p>
+
+                          <input type="file" class="files-upload" >
+                    </div>
+            </div>
         </div>
     </div>
-</div>
+</div> -->

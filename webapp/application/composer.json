@@ -3,7 +3,8 @@
     "description": "Trackseg",
     "type": "project",
     "require": {
-        "kriansa/openboleto": "^1.0"
+        "kriansa/openboleto": "^1.0",
+        "aws/aws-sdk-php": "^3.36"
     },
     "authors": [
         {

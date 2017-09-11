@@ -59,7 +59,153 @@
         }
     })
 
-    $('.modal').modal('show')
+    // var $area = $('.upload-area')
+
+    // $area.on('drag dragstart dragend dragover dragenter dragleave drop', function(e){
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    // })
+    // .on('dragover dragenter', function() {
+    //     $area.addClass('is-dragover');
+    // })
+    // .on('dragleave dragend drop', function() {
+    //     $area.removeClass('is-dragover');
+    // })
+    // .on('drop', function(e) {
+
+    //     droppedFiles = e.originalEvent.dataTransfer;
+
+    //     if( $('.modal').hasClass('show') != true ){
+    //         $('.modal').modal('show')
+    //     }
+        
+    //     var randomID = function(){
+
+    //         var id = 0;
+    //         return function () {
+    //             return "_up" + id++;
+    //         };
+    //     }
+
+    //     console.log(droppedFiles.items)
+
+    //     if(droppedFiles.items){
+    //         for(var i=0; i < droppedFiles.items.length; i++ ){
+
+    //             var file = droppedFiles.items[i].getAsFile(),
+    //                 fID = randomID()
+
+    //             console.log(file)
+
+    //             $('.modal .lista').append('<div class="lista-item-upload animated flipInX"><div class="row w-100 align-items-center"><div class="col-12 col-md-3"><input class="form-control" id="'+fID+'" name="" value="'+file.name+'" type="text"/></div> <div class="col-12 col-md-3"></div> <div class="col-12 col-md-3"><input class="form-control" name="" type="date"/></div> <div class="col-12 col-md-2"><label class="switch"><input type="checkbox" name="docRecalculo" value="1"> <div class="slider round"></div> </label></div> <div class="col-12 col-md-1"><i class="flaticon-error"></i></div>  </div> </div>')
+    //         }
+
+    //     }
+
+        
+
+    // });
+
+    var imagsArray = []
+
+
+    var processPreviewFiles = function(e){
+        droppedFiles = e.originalEvent.dataTransfer;
+
+        if( $('.modal').hasClass('show') != true ){
+            $('.modal').modal('show')
+        }
+        
+        var randomID = function(){
+
+            return Math.floor((Math.random() * 10000) + 1);
+        }
+
+
+        if(droppedFiles.items){
+
+
+            $.each( droppedFiles.files, function(i, file) {
+
+                console.log(file)
+
+                var fID = randomID()
+
+                var reader = new FileReader();
+
+                reader.onloadend = function(){
+
+                    $('.modal .lista').append( 
+                        '<div class="lista-item-upload animated flipInX">'+
+                        '<div class="row w-100 align-items-center">'+
+                        '<div class="col-12 col-md-6">'+file.name+'</div>'+
+                        '<div class="col-12 col-md-5"><input class="form-control" name="arq'+fID+'[nome]" value="'+file.name+'" type="text"/></div>'+                    
+                        '<div class="col-12 col-md-1"><i class="flaticon-error"></i></div>'+
+                        '</div>'+
+                        '<input class="form-control" name="arq'+fID+'[file]" value="'+reader.result+'" type="hidden"/> '+
+                        '<input class="form-control" name="arq'+fID+'[filename]" value="'+file.name+'" type="hidden"/> '+
+                        '</div>')
+
+
+                }
+
+
+                // reader.onload = $.proxy(function(file, $fileList, event) {
+
+                //     var img = file.type.match('image.*') ? "<img src='" + event.target.result + "' /> " : "";
+                //     $fileList.prepend( $("<li>").append( img + file.name ) )
+
+                // }, this, file, $("#fileList"));
+
+                reader.readAsDataURL(file);
+            })
+
+        }
+    }
+
+    var $area = $('.upload-area')
+
+    $area.on('drag dragstart dragend dragover dragenter dragleave drop', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+    })
+    .on('dragover dragenter', function() {
+        $area.addClass('is-dragover');
+    })
+    .on('dragleave dragend drop', function() {
+        $area.removeClass('is-dragover');
+    })
+    .on('drop', function(e) {
+
+        processPreviewFiles(e)       
+
+    });
+
+    $('.files').on('change', function(e){
+        console.log(e)
+    })
+
+    
+    $('.modal').on('click', '.lista-item-upload .flaticon-error', function(e){
+        e.preventDefault()
+        
+        if( confirm('Deseja excluir mesmo?') ){
+            var $this = $(this)
+
+            $this.parents('.lista-item-upload').addClass('animated flipOutX')
+
+            setTimeout(function(){
+                $this.parents('.lista-item-upload').remove()
+            },500)
+        }
+
+        
+    })
+
+    $('.modal').on('click', 'form button[type=submit]', function(e){
+                
+    })
+
     
     </script>
  
