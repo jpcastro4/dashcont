@@ -190,19 +190,19 @@
     },
     checkNumberOfTags: function() {
       var currentNo = this.$tags.find(addDot(classNames.tag)).length;
-      if (currentNo === 0) {
-        this.enablePlaceHolderText();
-      } else {
-        this.disablePlaceHolderText();
-      }
+      // if (currentNo === 0) {
+      //   this.enablePlaceHolderText();
+      // } else {
+      //   this.disablePlaceHolderText();
+      // }
 
-      if (this.settings.maxAllowed !== 0) {
-        if (this.settings.maxAllowed > currentNo) {
-          this.enablePopover();
-        } else {
-          this.disablePopover();
-        }
-      }
+      // if (this.settings.maxAllowed !== 0) {
+      //   if (this.settings.maxAllowed > currentNo) {
+      //     this.enablePopover();
+      //   } else {
+      //     this.disablePopover();
+      //   }
+      // }
 
       this.syncWithSelect();
     },
@@ -464,7 +464,7 @@
     });
   }
 
-  function createPlaceholderInput() {
+  function createPlaceholderInput(){
     return template('<li class="{placeholder}">' +
              '<div>' +
               '<input type="text" readonly="true">' +

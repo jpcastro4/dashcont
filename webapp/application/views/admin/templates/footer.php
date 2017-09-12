@@ -319,6 +319,35 @@
         if( $('.upload-process').hasClass('ativo') != true ){
             $('.upload-process').addClass('ativo')
         }
+
+        var initPopover = function(){
+
+            $(function(){
+                $('.upload-process').find('select.tags').popSelect({
+                    showTitle: false,
+                    placeholderText: '<i class="flaticon-plus font-verde add-tag"></i> Add nova Tag',
+                });
+            });
+        }
+
+        var getTags = function(fID){
+
+            $.get(ajaxUrl+'getTags', function(r){
+
+                var insertTags = $.each(r, function(i,e){
+
+                    $(".tags"+fID).append('<option value="'+e.tagID+'" data-bg="'+e.tagCor+'">'+e.tagNome+'</option>')
+
+                })
+
+                $.when(insertTags ).then( initPopover() )
+
+            },'json')
+            .fail(function(r){
+
+                console.log(r)
+            })
+        }
         
         var randomID = function(){
 
@@ -338,23 +367,14 @@
                     $('.upload-process .lista').append( 
                         '<div class="lista-item-upload animated flipInX doc'+fID+'" >'+
                         '<div class="row w-100 align-items-center">'+
-                            '<div class="col-12 col-md-4"><input class="form-control" name="doc'+fID+'[docNome]" value="'+file.name+'" type="text"/></div>'+
-                            // '<div class="col-12 col-md-1 text-center">'+
-                            //     ''+
-                            // '</div>'+
+                            '<div class="col-12 col-md-4"><input class="form-control" name="doc'+fID+'[docNome]" value="'+file.name+'" type="text"/></div>'+ 
                             '<div class="col-12 col-md-3 text-center"><input class="form-control" name="doc'+fID+'[docVenc]" type="date"/></div>'+
                             '<div class="col-12 col-md-3 text-center"><input class="form-control" name="doc'+fID+'[docComp]" type="month"/></div>'+
                             '<div class="col-12 col-md-1 mt-3 pl-4"> <label class="switch"><input type="checkbox" name="doc'+fID+'[docRec]" value="1"><div class="slider round"></div></label></div>'+
                             '<div class="col-12 col-md-1 text-right"><i class="flaticon-error font-vermelho"></i></div>'+
                             '<div class="row w-100 my-1 mx-0 align-items-center">'+
-                                '<div class="col-1"><i class="flaticon-plus font-verde add-tag"></i></div>'+
                                 '<div class="col-11">'+
-                                '<select id="tags" class="tags" name="doc'+fID+'[tags]" multiple>'+
-                                    '<option value="1">Previdencia</option>'+
-                                    '<option value="2">DUA</option>'+
-                                    '<option value="3">Municipal</option>'+
-                                    '<option value="4" selected="selected">Federal</option>'+
-                                    '<option value="5" selected="selected">Imposto</option>'+
+                                '<select id="tags" class="tags tags'+fID+'" name="doc'+fID+'[tags]" multiple>'+
                                 '</select>'+
                                 '</div>'+
                             '</div>'+
@@ -363,21 +383,11 @@
                         '<input class="form-control" name="doc'+fID+'[filename]" value="'+file.name+'" type="hidden"/>'+
                         '</div>')
 
-
-                    $(function(){
-                        $('select.tags').popSelect({
-                            showTitle: false,
-                            placeholderText: 'Add Tag',
-                        });
-                    });
+                    getTags(fID)
 
                 }
 
-                //console.log( $('.upload-process').find("#tags") )
-
-                
-                 
-
+                // console.log( $('.upload-process').find("#tags") )
 
                 // reader.onload = $.proxy(function(file, $fileList, event) {
 
@@ -500,6 +510,7 @@
         })
         .done(function(r){
             console.log('success')
+            console.log(r)
 
             if(r.status == true ){
                 $('.'+$class+' i').removeClass('fa fa-spin flaticon-cogwheel font-vermelho').addClass('animated bounceIn flaticon-success font-verde')
@@ -513,9 +524,7 @@
             }
         })
         .fail(function(r){
-             console.log('erro')
-
-            
+            console.log('erro')           
             console.log(r)
         })
     }

@@ -103,7 +103,7 @@
     <div class="painel">
         <form action="<?php echo base_url()?>form/uploadDocS3<?php if(!empty($cliente)){ echo '/'.$cliente->clienteCpfCnpj;} ?>" method="post" enctype="multipart/form-data" >
         <div class="painel-block">
-            <div class="painel-content row px-0 upload-process">
+            <div class="painel-content row mx-0 upload-process">
                 <div class="row w-100 lista-head">
                     <div class="col-12 col-md-4">Nome do arquivo</div>
                     <!-- <div class="col-12 col-md-1 text-center">Tags</div> -->
@@ -122,11 +122,11 @@
                <!--  <div class="w-100 px-0">
                     <hr class="separador-cinza">
                 </div> -->
-                <div class="col-12 upload-buttons">
+                <div class="col-12 px-0 upload-buttons">
                     <button class="btn btn-theme btn-super process" type="submit" >Processar arquivos</button>
                 </div>
              
-                <div class="col-12 upload-buttons">
+                <div class="col-12 px-0 upload-buttons">
                     <button class="btn btn-link btn-width" data-dismiss="modal">Cancelar</button>
                 </div>
 

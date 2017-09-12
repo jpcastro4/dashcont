@@ -145,6 +145,9 @@ class Form extends CI_Controller {
 
 
  	public function uploadDocS3($cliente){
+
+ 		echo var_dump($this->input->post() );
+ 		return;
  		
  		$nome 		= $this->input->post('docNome');
  		$tags 		= (object) $this->input->post('tags');

@@ -60,4 +60,11 @@ class Ajax_functions extends CI_Controller {
 		$this->admin->excluirArquivo($id);
 	}
 
+	public function getTags(){
+
+		$result = $this->db->get('tags');
+
+		echo json_encode($result->result() );
+		return;
+	}
 }
