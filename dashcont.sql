@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 07-Set-2017 às 16:39
+-- Generation Time: 12-Set-2017 às 14:38
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -78,6 +78,13 @@ CREATE TABLE `bloqueios` (
   `bloqueioAlertaPush` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `bloqueios`
+--
+
+INSERT INTO `bloqueios` (`bloqueioID`, `bloqueioIdt`, `bloqueioMsg`, `bloqueioAlertaEmail`, `bloqueioAlertaSms`, `bloqueioAlertaPush`) VALUES
+(1, 'Inadinplencia', 'Favor entrar em contato com o escritório para esclarecimentos.', 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -87,7 +94,7 @@ CREATE TABLE `bloqueios` (
 CREATE TABLE `clientes` (
   `clienteID` int(11) NOT NULL,
   `clienteStatus` int(11) NOT NULL DEFAULT '0',
-  `clienteCpfCnpj` int(15) NOT NULL,
+  `clienteCpfCnpj` varchar(15) CHARACTER SET utf8 NOT NULL,
   `clienteNomeRazao` varchar(100) CHARACTER SET utf8 NOT NULL,
   `clienteCelular` varchar(12) CHARACTER SET utf8 NOT NULL,
   `clienteEmailPrinc` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -98,6 +105,13 @@ CREATE TABLE `clientes` (
   `clienteNotifPush` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`clienteID`, `clienteStatus`, `clienteCpfCnpj`, `clienteNomeRazao`, `clienteCelular`, `clienteEmailPrinc`, `clienteEmailSec`, `clienteDataUltAlt`, `clienteNotifSms`, `clienteNotifEmail`, `clienteNotifPush`) VALUES
+(1, 0, '14926394000118', 'DIFFERENCE MARKETING E INFORMATICA LTDA - ME', '62982752049', 'jp@grupodifference.com', NULL, '2017-09-08', 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -107,9 +121,36 @@ CREATE TABLE `clientes` (
 CREATE TABLE `clientes_arquivo` (
   `arquivoID` int(11) NOT NULL,
   `clienteID` int(11) NOT NULL,
+  `arquivoAwsKey` varchar(100) NOT NULL,
   `arquivoNome` varchar(100) NOT NULL,
-  `arquivoDataEnvio` date NOT NULL
+  `arquivoCaminho` text NOT NULL,
+  `arquivoDataEnvio` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `clientes_arquivo`
+--
+
+INSERT INTO `clientes_arquivo` (`arquivoID`, `clienteID`, `arquivoAwsKey`, `arquivoNome`, `arquivoCaminho`, `arquivoDataEnvio`) VALUES
+(1, 1, '729d3b5246cfb15059d6d780bb3e0c1c8', 'ServiceLogin.htm', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c8', '2017-09-11 12:04:08'),
+(2, 1, '56170012e5de59992ecb733c7fbea94912', 'ServiceLogin (1).htm', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/56170012e5de59992ecb733c7fbea94912', '2017-09-11 12:04:14'),
+(3, 1, '729d3b5246cfb15059d6d780bb3e0c1c9', 'Contrato Social', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c9', '2017-09-11 12:07:31'),
+(4, 1, '729d3b5246cfb15059d6d780bb3e0c1c14', 'Teste 3', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c14', '2017-09-11 12:20:58'),
+(5, 1, '56170012e5de59992ecb733c7fbea94915', 'Test 4', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/56170012e5de59992ecb733c7fbea94915', '2017-09-11 12:27:09'),
+(6, 1, '729d3b5246cfb15059d6d780bb3e0c1c5', 'Mais um', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c5', '2017-09-11 12:28:21'),
+(7, 1, '56170012e5de59992ecb733c7fbea9499', 'Outro', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/56170012e5de59992ecb733c7fbea9499', '2017-09-11 12:30:49'),
+(8, 1, '729d3b5246cfb15059d6d780bb3e0c1c6', 'Credo', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c6', '2017-09-11 12:32:30'),
+(9, 1, '7131aeeb9a8afc2bca20f652d938efc112', 'FOLDER TRIOTICA copiar.pdf', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/7131aeeb9a8afc2bca20f652d938efc112', '2017-09-11 12:42:10'),
+(10, 1, '729d3b5246cfb15059d6d780bb3e0c1c12', 'Teste loading', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c12', '2017-09-11 13:29:04'),
+(11, 1, '56170012e5de59992ecb733c7fbea94914', 'teste bill', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/56170012e5de59992ecb733c7fbea94914', '2017-09-11 13:32:46'),
+(12, 1, '56170012e5de59992ecb733c7fbea94910', 'bill 2', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/56170012e5de59992ecb733c7fbea94910', '2017-09-11 13:33:42'),
+(13, 1, '729d3b5246cfb15059d6d780bb3e0c1c6', 'bill 1', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c6', '2017-09-11 13:33:46'),
+(14, 1, '729d3b5246cfb15059d6d780bb3e0c1c11', 'bill 1', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c11', '2017-09-11 13:38:40'),
+(15, 1, '56170012e5de59992ecb733c7fbea9499', 'bill 2', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/56170012e5de59992ecb733c7fbea9499', '2017-09-11 13:38:49'),
+(16, 1, '729d3b5246cfb15059d6d780bb3e0c1c13', 'ServiceLogin.htm', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c13', '2017-09-11 13:38:54'),
+(17, 1, '729d3b5246cfb15059d6d780bb3e0c1c13', 'ServiceLogin.htm', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c13', '2017-09-11 13:48:10'),
+(18, 1, '56170012e5de59992ecb733c7fbea94912', 'ServiceLogin (1).htm', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/56170012e5de59992ecb733c7fbea94912', '2017-09-11 13:48:16'),
+(19, 1, '729d3b5246cfb15059d6d780bb3e0c1c12', 'ServiceLogin.htm', 'https://dashcont.s3-sa-east-1.amazonaws.com/14926394000118/729d3b5246cfb15059d6d780bb3e0c1c12', '2017-09-11 17:10:12');
 
 -- --------------------------------------------------------
 
@@ -135,12 +176,12 @@ CREATE TABLE `clientes_notif` (
 
 CREATE TABLE `documentos` (
   `docID` int(11) NOT NULL,
-  `docCaminho` varchar(300) NOT NULL,
+  `clienteID` int(11) NOT NULL,
   `docNome` varchar(200) NOT NULL,
   `docStatus` int(11) NOT NULL DEFAULT '0',
-  `docDataUltAlt` date NOT NULL,
+  `docDataUltAlt` datetime NOT NULL,
   `docRec` int(11) NOT NULL DEFAULT '0',
-  `docCompetencia` date NOT NULL
+  `docCompetencia` date DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -164,6 +205,8 @@ CREATE TABLE `documentos_tags` (
 CREATE TABLE `documentos_versao` (
   `docVrsID` int(11) NOT NULL,
   `docID` int(11) NOT NULL,
+  `docVrsAwsKey` varchar(200) NOT NULL,
+  `docVrsCaminho` varchar(300) NOT NULL,
   `docVrsDataEnvio` date NOT NULL,
   `docVrsOpens` int(11) NOT NULL DEFAULT '0',
   `docVrsPrints` int(11) NOT NULL DEFAULT '0',
@@ -195,6 +238,14 @@ CREATE TABLE `tags` (
   `tagUrl` varchar(50) NOT NULL,
   `tagCor` varchar(10) CHARACTER SET utf8 NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tags`
+--
+
+INSERT INTO `tags` (`tagID`, `tagNome`, `tagUrl`, `tagCor`) VALUES
+(1, 'Federal', 'federal', '#ff0000'),
+(2, 'Estadual', 'estadual', '#008000');
 
 --
 -- Indexes for dumped tables
@@ -295,17 +346,17 @@ ALTER TABLE `adm_notif`
 -- AUTO_INCREMENT for table `bloqueios`
 --
 ALTER TABLE `bloqueios`
-  MODIFY `bloqueioID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bloqueioID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `clienteID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `clienteID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `clientes_arquivo`
 --
 ALTER TABLE `clientes_arquivo`
-  MODIFY `arquivoID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `arquivoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `clientes_notif`
 --
@@ -335,7 +386,7 @@ ALTER TABLE `sys_notif_control`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tagID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
