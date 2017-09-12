@@ -99,75 +99,176 @@ class Form extends CI_Controller {
 		 
  	}
 
- 	public function uploadFileS3($cliente,$filename,$file,$nome){
+ 
+ 	public function uploadFileS3($cliente){
 
- 		$client 	= $this->awsCredential();
+ 		// echo json_encode( $this->input->post('filename')  );
+ 		// return;
+
+ 		$filename 	= $this->input->post('filename');
+ 		$file 		= explode(",", $this->input->post('file') );
+ 		$nome 		= $this->input->post('nome');
 
  		$keyName 	= md5($filename).rand(5,15);
 
  		$bucket 	= 'dashcont';
 		$key 		= $cliente.'/'.$keyName;
+		$fileData 	= base64_decode( end($file) );
 
-		$fileData 	= base64_decode(end(explode(",", $file)));
+ 		$client 	= $this->awsCredential();		
 		$upload 	= $client->upload($bucket, $key, $fileData, 'public-read');
 		$caminho 	= $upload->get('ObjectURL');
 
- 		//$exist		= $client->getObjectInfo()
+		if($upload){
+			$this->db->where('clienteCpfCnpj',$cliente);
+	 		$clienteID = $this->db->get('clientes')->row()->clienteID;
+	 		
+			$insert = array(
+				'clienteID'=>$clienteID,
+				'arquivoNome'=>$nome,
+				'arquivoAwsKey'=>$keyName,
+				'arquivoCaminho'=>$caminho,
+				'arquivoDataEnvio'=>date('Y-m-d H:i:s')
+				);
 
- 		// if($exist){
- 			
- 		// }else{
- 						
- 		// }
+		 	$this->db->insert('clientes_arquivo', $insert );
 
- 		$this->db->where('clienteCpfCnpj',$cliente);
- 		$clienteID = $this->db->get('clientes')->row()->clienteID;
+		 	echo json_encode( array('status'=>TRUE ) );
+		 	return;
+
+		 }else{
+
+		 	echo json_encode( array('status'=>FALSE ) );
+		 	return;
+		 }	 	
+ 	}
+
+
+ 	public function uploadDocS3($cliente){
  		
-		$insert = array( 'clienteID'=>$clienteID,'arquivoNome'=>$nome,'arquivoAwsKey'=>$keyName,'arquivoCaminho'=>$caminho,'arquivoDataEnvio'=>date('Y-m-d H:i:s') );
+ 		$nome 		= $this->input->post('docNome');
+ 		$tags 		= (object) $this->input->post('tags');
+ 		$vencimento = $this->input->post('docVrsVenc');
 
-	 	$this->db->insert('clientes_arquivo', $insert );
+ 		$filename 	= $this->input->post('filename');
+ 		$file 		= explode(",", $this->input->post('file') );
+ 		$keyName 	= md5($filename).rand(5,15);
 
-	 	return true;
+ 		$bucket 	= 'dashcont';
+		$key 		= $cliente.'/'.$keyName;
+		$fileData 	= base64_decode( end($file) );
 
+ 		$client 	= $this->awsCredential();		
+		$upload 	= $client->upload($bucket, $key, $fileData, 'public-read');
+		$caminho 	= $upload->get('ObjectURL');
 
- 		// 	$result = $client->putObject(array(
-		//     'Bucket' => 'dashcont',
-		//     'Key'    => $cliente.'/'.$filename,
-		//     'SourceFile' => $file_base64,
-		//     'ACL' 	 => 'public-read',
-		// ));
+		if($upload){
 
-		// Access parts of the result object
-		// echo $result['Expiration'] . "\n";
-		// echo $result['ServerSideEncryption'] . "\n";
-		// echo $result['ETag'] . "\n";
-		// echo $result['VersionId'] . "\n";
-		// echo $result['RequestId'] . "\n";
+			$this->db->where('clienteCpfCnpj',$cliente);
+	 		$clienteID = $this->db->get('clientes')->row()->clienteID;
 
-		// Get the URL the object can be downloaded from
-		// return $result['ObjectURL'];
+			$insertFile = array(
+				'clienteID'=>$clienteID,
+				'docNome'=>$nome,
+				'docDataUltAlt'=>date('Y-m-d H:i:s'),
+				);
 
+			if( !empty($this->input->post('docRec') ) ){
+	 			$insertFile['docRec'] = 1;
+	 		}else{
+	 			$insertFile['docRec'] = 0;
+	 		}
 
+			if($this->input->post('docCompetencia') != '0000-00-00' ){
+	 			$insertFile['docCompetencia'] = $this->input->post('docCompetencia');
+	 		}
+
+		 	$saveFile = $this->db->insert('clientes_arquivo', $insertFile );
+		 	$docID = $this->db->insert_id();
+
+		 	if($saveFile){
+
+		 		//SAVE TAGS
+		 		foreach($tags as $tag){
+		 			$this->db->insert('documentos_tags', array('docID'=>$docID,'tagID'=>$tag->tagID ));
+		 		}
+
+		 		$insertVrs = array(
+		 			'docID'=$docID,
+		 			'docVrsAwsKey'=>$key,
+		 			'docVrsCaminho'=>$caminho,
+		 			'docVrsDataEnvio'=>date('Y-m-d H:i:s')
+		 			);
+
+		 		if($vencimento != '0000-00-00'){
+		 			$insertVrs['docVrsVenc'] = $vencimento;
+		 		}
+
+		 		$saveVersao = $this->db->insert('documentos_versao', $insertVrs );
+
+		 		if($saveVersao){
+
+		 			echo json_encode( array('status'=>TRUE ) );
+		 			return;
+		 		}else{
+
+		 			echo json_encode( array('status'=>FALSE,'mesage'=>'Caminho não recuperado' ) );
+		 			return;
+		 		}
+
+		 	}else{
+		 		echo json_encode( array('status'=>FALSE,'mesage'=>'O upload foi feito mas não foi salvo' ) );
+		 		return;
+		 	}	 	
+
+		 }else{
+
+		 	echo json_encode( array('status'=>FALSE,'mesage'=>'O upload para a nuvem falhou' ) );
+		 	return;
+		 }	 	
  	}
 
- 	public function arquivo($clienteCpfCnpj){
- 
- 		$campos = (object) $this->input->post();
 
- 		foreach ($campos as $items) {
+ 	public function uploadRecDocS3($cliente){
 
- 			$item = (object) $items;
+ 		$filename 	= $this->input->post('filename');
+ 		$file 		= explode(",", $this->input->post('file') );
+ 		$nome 		= $this->input->post('nome');
 
- 	 		$update = $this->uploadFileS3($clienteCpfCnpj,$item->filename,$item->file,$item->nome);
- 		}
+ 		$keyName 	= md5($filename).rand(5,15);
 
- 		redirect('admin/cliente/'.$clienteCpfCnpj);
+ 		$bucket 	= 'dashcont';
+		$key 		= $cliente.'/'.$keyName;
+		$fileData 	= base64_decode( end($file) );
 
+ 		$client 	= $this->awsCredential();		
+		$upload 	= $client->upload($bucket, $key, $fileData, 'public-read');
+		$caminho 	= $upload->get('ObjectURL');
+
+		if($upload){
+			$this->db->where('clienteCpfCnpj',$cliente);
+	 		$clienteID = $this->db->get('clientes')->row()->clienteID;
+	 		
+
+			$insert = array(
+				'clienteID'=>$clienteID,
+				'docNome'=>$nome,
+				'docAwsKey'=>$keyName,
+				'docCaminho'=>$caminho,
+				'docDataEnvio'=>date('Y-m-d H:i:s')
+				);
+
+		 	$this->db->insert('clientes_arquivo', $insert );
+
+		 	echo json_encode( array('status'=>TRUE ) );
+		 	return;
+
+		 }else{
+
+		 	echo json_encode( array('status'=>FALSE ) );
+		 	return;
+		 }	 	
  	}
-
-
-
-
 
 
 	public function rastreador(){

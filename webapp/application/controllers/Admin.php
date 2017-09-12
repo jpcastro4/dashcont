@@ -102,11 +102,12 @@ class Admin extends CI_Controller {
         $this->load->view('admin/templates/footer');
 	}
 
-	public function cliente($clienteCpfCnpj=null){
+	public function cliente($clienteCpfCnpj){
 
 		$data['titulo'] = 'Administrativo - Cliente';
         $data['titulo_1'] = 'Administrativo';
 		$data['titulo_2'] = 'Cliente';
+		$data['arquivo'] = true;
 
 		$data['cliente'] = $this->admin->getCliente($clienteCpfCnpj);
 
@@ -118,19 +119,23 @@ class Admin extends CI_Controller {
         $this->load->view('admin/templates/footer');
 	}
 
-	public function cliente_documentos($clienteID){
+	public function cliente_documentos($clienteCpfCnpj){
 
 		$data['titulo'] = 'Administrativo - Cliente';
-        $data['titulo_1'] = 'Administrativo';
-		$data['titulo_2'] = 'Cliente';
+        $data['titulo_1'] = 'Documentos do mês';
+        $data['icone'] = 'flaticon-calendar';
+		$data['titulo_2'] = '';
+		$data['documents'] = true;
 
-		$data['cliente'] = $this->admin->getCliente($clienteID);
+		$data['cliente'] = $this->admin->getCliente($clienteCpfCnpj);
+
+		//$data['documentos'] = $this->admin->getDocumentos($data['cliente']->clienteID);
 
 		$data['mensagem'] = $this->session->flashdata('mensagem');
 		$data['mensagem_erro'] = $this->session->flashdata('mensagem_erro');
  		
  		$this->load->view('admin/templates/header', $data);
-        $this->load->view('admin/cliente');
+        $this->load->view('admin/documentos');
         $this->load->view('admin/templates/footer');
 	}
 

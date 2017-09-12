@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="col-2 text-right">
                                             <!-- <a href="<?php echo base_url('admin/clientes/'.$cliente->clienteCpfCnpj )?>" class="btn btn-theme"><span class="fa fa-search-plus"></span></a> -->
-                                            <a href="<?php echo $doc->arquivoCaminho ?>" target="_blank" class="btn btn-theme"><span class="flaticon-multimedia" ></span></a>
+                                            <a href="<?php echo $doc->arquivoCaminho ?>" target="_blank" data-toggle="tooltip" data-placement="top" title="Baixar" class=""><i class="flaticon-multimedia" ></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
     </div>
 </div>
 
-<div class="modal animated bounceIn">
+<div class="modal animated bounceIn" id="upload-arquivo" data-keyboard="false" data-backdrop="false">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <i aria-hidden="true" class="flaticon-error"> </i>
                 </button>
@@ -125,7 +125,7 @@
                 
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url()?>form/arquivo<?php if(!empty($cliente)){ echo '/'.$cliente->clienteCpfCnpj;} ?>" method="post" enctype="multipart/form-data" >
+                <form action="<?php echo base_url()?>form/uploadFileS3<?php if(!empty($cliente)){ echo '/'.$cliente->clienteCpfCnpj;} ?>" method="post" enctype="multipart/form-data" >
                 <div class="painel">
                     <div class="painel-block">
                         <div class="painel-content row px-0">

@@ -25,7 +25,7 @@ body, html{
 }
 
 a{
-	color:#A80B0B;
+	color:#0071BC;
 	text-decoration: none;
 }
 a:hover {
@@ -54,7 +54,7 @@ hr.separador-cinza{
 	border: 0;
 	margin-top:0;
     height: 1px;
-    background:#f0f1f2;
+    background:#dfe5f2;
     display: block;
 }
 
@@ -95,7 +95,12 @@ hr.separador-cinza{
 .font-branco{
 	color:#fff;
 }
-
+.font-vermelho{
+	color:#c60000;
+}
+.font-verde{
+	color:#32B40A;
+}
 .title-1{
 	font-size:20px;
 	font-weight: 700;
@@ -112,8 +117,11 @@ hr.separador-cinza{
 }
 
 .container{
-	max-width: 900px;
+	max-width: 960px;
 	min-width: 320px;
+}
+.container-docs{
+	max-width: 1024px;
 }
 /*@media (min-width: 768px) {
 	.container{
@@ -145,11 +153,10 @@ hr.separador-cinza{
 	color:#4e5159;
 }
 .form-control{
-	font-size:;
+	font-size: 0.9rem;
 	font-weight: 400;
 	padding: .75rem .80rem;
     margin-bottom: 0;
-    font-size: 0.9rem;
     line-height: 1.25;
     color: #4e5159;
     /*background-color: #dfe5f2;*/
@@ -193,8 +200,8 @@ label{
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 10px;
+  width: 45px;
+  height: 8px;
 }
 
 /* Hide default HTML checkbox */
@@ -216,8 +223,8 @@ label{
 .slider:before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   left: 4px;
   top: -6px;
   background-color: #cc0000;
@@ -235,9 +242,9 @@ input:focus + .slider {
 
 input:checked + .slider:before {
 	background-color: #00B258;
-  -webkit-transform: translateX(31px);
-  -ms-transform: translateX(31px);
-  transform: translateX(31px);
+  -webkit-transform: translateX(21px);
+  -ms-transform: translateX(21px);
+  transform: translateX(21px);
 }
 
 /* Rounded sliders */
@@ -598,7 +605,14 @@ body{
 	font-size:30px;
 	display: inline-flex;
 }
-
+.header .cnpj{
+	float:right;
+	background:#0071BC;
+	color:#fff;
+	font-size: 12px;
+	padding:7px 10px;
+	border-radius:8px;
+}
 .painel{
 	box-shadow: 0 2px 8px rgba(59,89,178,.15);
 	border-radius:8px;
@@ -645,8 +659,9 @@ body{
 	font-weight: normal !important;
 }
 .lista-item i{
-	/*font-size:16px;
-	padding:0 10px;*/
+	font-size:20px;
+	font-weight: bold;
+	padding:0 10px;
 }
 .lista-item-painel{
 	padding:20px;
@@ -696,11 +711,14 @@ body{
 .lista-item-upload{
 	border-bottom:1px solid #dfe5f2;
 	padding:10px 0;
-
 }
 .lista-item-upload .form-control{
 	font-size:12px;
 	padding: .50rem .60rem;
+}
+.lista-item-upload i{
+	font-size:18px;
+	font-weight: bold;
 }
 /*MODAL*/
 
@@ -743,8 +761,100 @@ body{
 }
 
 
-/*NEW POST*/
- 
+/*DOCUMENTOS*/
+.calendario{
+	color:#808080;
+}
+.calendario:after{
+	content:"\f100";
+	font-family: Flaticon;
+	font-style: normal;
+	font-size:12px;
+	padding:0 15px;
+	position: relative;
+    top: -5px;
+}
+.calendario:before{
+	content:"\f102";
+	font-family: Flaticon;
+	font-style: normal;
+	font-size:12px;
+	padding:0 15px;
+	position: relative;
+    top: -5px;
+}
+.calendario:hover:after{
+	right:-5px;
+}
+.calendario:hover:before{
+	left:-5px;
+}
+.calendario.ano{
+	font-size:22px;
+}
+.calendario.mes{
+	font-size:30px;
+	font-weight: 900;
+}
+
+.filtros{
+	font-size:1rem;
+}
+.filtros .form-control{
+	font-size:0.8rem;
+	padding:.30rem .40rem;
+	width: inherit;
+	display: inline-block;
+	margin-left:20px;
+	outline: none;
+}
+.filtros .form-control:focus{
+	outline: none;
+}
+
+.lista-item-doc{
+	color:#333;
+	margin-bottom: 15px;
+	border-bottom:1px solid #dfe5f2;
+	padding:10px 0;
+	font-size:0.8rem;
+}
+.lista-item-doc i{
+	font-size:20px;
+	font-weight: normal;
+	padding:0 10px;
+}
+.lista-item-doc-painel{
+	padding:20px;
+	background: #f8f8f8;
+	display: none;
+}
+.lista-item-doc .track i{
+	font-size:0.9rem !important;
+}
+.lista-item-doc .track {
+	font-size:0.9rem !important;
+}
+.lista-item-doc tag{
+	padding:5px;
+	border-radius:5px;
+	background:#eee;
+	margin-right:3px;
+}
+
+.upload-process{
+	display: none;
+}
+.upload-process.ativo{
+	display: block;
+}
+.upload-process input[type=date].form-control, .upload-process input[type=month].form-control{
+	width: max-content;
+}
+
+
+
+
 .font-preto{
 	color:#000 !important;
 }

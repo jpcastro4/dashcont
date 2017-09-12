@@ -19,6 +19,11 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,600,800" rel="stylesheet">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
+        <script src="<?php echo base_url()?>assets/lib/jquery.popSelect.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/7cbf6b3d85.js"></script>
 
         <script type="text/javascript">var ajaxUrl = '<?php echo base_url('ajax_functions/'); ?>'; </script>
@@ -26,7 +31,9 @@
         <!-- <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootbox/sweet-alert.min.css" /> -->
         <link rel="stylesheet" href="<?php echo base_url()?>assets/css/theme.css">
         <link rel="stylesheet" href="<?php echo base_url()?>assets/font/flaticon.css">
-        <link rel="stylesheet" href="<?php echo base_url()?>assets/lib/animate.css">  
+        <link rel="stylesheet" href="<?php echo base_url()?>assets/lib/animate.css">
+        <link rel="stylesheet" href="<?php echo base_url()?>assets/lib/all-animation.min.css">
+        <link rel="stylesheet" href="<?php echo base_url()?>assets/lib/jquery.popSelect.css">  
         <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/rede.css"> -->
 
 

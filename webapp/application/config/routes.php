@@ -70,7 +70,8 @@ $route['admin/configuracoes/tags'] = 'admin/tags';
 $route['admin/configuracoes/tags/(:num)'] = 'admin/tags/$1';
 
 $route['admin/clientes'] = 'admin/clientes';
-$route['admin/cliente/(:num)'] = 'admin/cliente/$1';
+$route['admin/cliente/(:num)/cadastro'] = 'admin/cliente/$1';
+$route['admin/cliente/(:num)/documentos'] = 'admin/cliente_documentos/$1';
 
 $route['dashboard/administrativo/usuarios'] = 'dashboard/usuarios';
 $route['dashboard/administrativo/usuarios/novo'] = 'dashboard/novo_usuario';
