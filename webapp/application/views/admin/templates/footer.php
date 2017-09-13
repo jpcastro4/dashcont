@@ -659,7 +659,7 @@
 
         $('.'+$class).find('.lista-item-status').removeClass('flaticon-error font-vermelho').addClass('flaticon-cogwheel fa fa-spin')
 
-        $data = {docID:docID,file:file,filename:filename}
+        var $data = {docID:docID,file:file,filename:filename}
 
         $.ajax({
             url: $url,

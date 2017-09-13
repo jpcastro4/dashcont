@@ -115,8 +115,18 @@ class Form extends CI_Controller {
 		$key 		= $cliente.'/'.$keyName;
 		$fileData 	= base64_decode( end($file) );
 
- 		$client 	= $this->awsCredential();		
-		$upload 	= $client->upload($bucket, $key, $fileData, 'public-read');
+ 		$client 	= $this->awsCredential(); 		
+		//$upload 	= $client->upload($bucket, $key, $fileData, 'public-read');
+		$upload 	= $client->putObject(
+			array(
+			'Bucket'       => $bucket,
+		    'Key'          => $key,
+		    'SourceFile'   => $fileData,
+		    //'ContentType'  => 'text/plain',
+		    'ACL'          => 'public-read',
+		    'scheme' => 'http',
+			)
+		);
 		$caminho 	= $upload->get('ObjectURL');
 
 		if($upload){
