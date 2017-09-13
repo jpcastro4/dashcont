@@ -26,84 +26,21 @@
             </div>
         </div>
     </div>
-    <div class="painel mt-4">
-        <div class="painel-block">
+    <div class="painel mt-4 overflow-hidden relative">
+
              
-            <div class="painel-content row px-0">
-                <div class="row w-100  lista-head mb-3">
-                    <div class="col-12 col-md-3">Documento</div>
-                    <div class="col-12 col-md-3">Tags</div>
-                    <div class="col-12 col-md-2">Track</div>
-                    <div class="col-12 col-md-1">Status</div>
-                    <div class="col-12 col-md-1"> </div>
-                    <div class="col-12 col-md-1"> </div>
-                </div>
-                <div class="w-100 px-0">
-                    <hr class="separador-cinza">
-                </div> 
-                <div class="lista">
-                    <div class="lista-item-doc row mx-0">
-
-                        <div class="col-12 col-md-3">Guia de pagamento GPS - Comp 09/2017</div>
-                        <div class="col-12 col-md-3"><tag>Federal</tag><tag>Imposto</tag><tag>Previdencia</tag></div>
-                        <div class="col-12 col-md-2 track">
-                            <span class="view" data-toggle="tooltip" data-placement="top" title="Visualizações" >2 <i class="flaticon-visibility"></i></span> <span class="print" data-toggle="tooltip" data-placement="top" title="Impressões">2 <i class="flaticon-technology-1"></i></span>
-                        </div>
-                        <div class="col-12 col-md-1">Status</div>
-                        <div class="col-12 col-md-2 text-center">
-                            <span class="view" data-toggle="tooltip" data-placement="top" title="Inserir recálculo" > <i class="flaticon-interface-3"></i></span> <span class="print" data-toggle="tooltip" data-placement="top" title="Impressões"> <i class="flaticon-technology-1"></i></span>
-                        </div>
-                        <div class="col-12 col-md-1">
-                            <span data-toggle="tooltip" data-placement="top" title="Expandir" data-open-panel="1"> <i class="flaticon-arrows-1"></i></span> 
-                        </div>
-                        <div class="col-12 lista-item-doc-painel mt-2" data-panel="1">
-                            <div class="row w-100  lista-head mb-2">
-                                <div class="col-12 col-md-2">Recálculo</div>
-                                <div class="col-12 col-md-2">Data do envio</div>
-                                <div class="col-12 col-md-2 text-center">Track</div>
-                                <div class="col-12 col-md-3">Vencimento</div>
-                                <div class="col-12 col-md-2">Competência</div>
-                            </div>
-                            <div class="lista">
-                                <div class="lista-item-doc row mx-0 ">
-                                    <div class="col-12 col-md-2 px-0">2</div>
-                                    <div class="col-12 col-md-2 px-0">05/07/2017 13:52</div>
-                                    <div class="col-12 col-md-2 track ">
-                                        <span class="view" data-toggle="tooltip" data-placement="top" title="Visualizações" >2 <i class="flaticon-visibility"></i></span> <span class="print" data-toggle="tooltip" data-placement="top" title="Impressões">2 <i class="flaticon-technology-1"></i></span>
-                                    </div>
-                                    <div class="col-12 col-md-3">12/07/2017</div>
-                                    <div class="col-12 col-md-2">07/2017</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-
-                    <div class="lista-item-doc row mx-0">
-
-                        <div class="col-12 col-md-3">Guia de pagamento GPS - Comp 09/2017</div>
-                        <div class="col-12 col-md-3"><tag>Federal</tag><tag>Imposto</tag><tag>Previdencia</tag></div>
-                        <div class="col-12 col-md-2 track">
-                            <span class="view" data-toggle="tooltip" data-placement="top" title="Visualizações" >2 <i class="flaticon-visibility"></i></span> <span class="print" data-toggle="tooltip" data-placement="top" title="Impressões">2 <i class="flaticon-technology-1"></i></span>
-                        </div>
-                        <div class="col-12 col-md-1">Status</div>
-                        <div class="col-12 col-md-2 text-center">
-                            <span class="view" data-toggle="tooltip" data-placement="top" title="Inserir recálculo" > <i class="flaticon-interface-3"></i></span> <span class="print" data-toggle="tooltip" data-placement="top" title="Impressões"> <i class="flaticon-technology-1"></i></span>
-                        </div>
-                        <div class="col-12 col-md-1">
-                            <span data-toggle="tooltip" data-placement="top" title="Expandir" > <i class="flaticon-arrows-1"></i></span> 
-                        </div>
-                    </div>
-                </div>               
-
-            </div>
+        <div class="painel-block painel-docs">
+            
+            
         </div>
     </div>
 
 
-    <div class="painel">
-        <form action="<?php echo base_url()?>form/uploadDocS3<?php if(!empty($cliente)){ echo '/'.$cliente->clienteCpfCnpj;} ?>" method="post" enctype="multipart/form-data" >
+    <div class="painel" id="upload-docs">
+        
         <div class="painel-block">
             <div class="painel-content row mx-0 upload-process">
+            <form action="<?php echo base_url()?>form/uploadDocS3<?php if(!empty($cliente)){ echo '/'.$cliente->clienteCpfCnpj;} ?>" method="post" enctype="multipart/form-data" >
                 <div class="row w-100 lista-head">
                     <div class="col-12 col-md-4">Nome do arquivo</div>
                     <!-- <div class="col-12 col-md-1 text-center">Tags</div> -->
@@ -129,7 +66,7 @@
                 <div class="col-12 px-0 upload-buttons">
                     <button class="btn btn-link btn-width" data-dismiss="modal">Cancelar</button>
                 </div>
-
+                </form>
             </div>
 
             <div class="painel-content row px-0">
@@ -145,7 +82,7 @@
                 </div>
             </div>
         </div>
-        </form>
+        
     </div>
                 
 

@@ -4,41 +4,139 @@
 
     <!-- <script src="<?php echo base_url()?>assets/js/jquery.ajaxfileupload.js"></script> -->
     <script type="text/javascript">
-        $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-        })
 
-        var app = {
+    var app = {
 
             news: function(message,typeNews){
 
                 new Noty({                        
                             text: message,
-                            layout: 'topRight',
+                            layout: 'bottomRight',
                             type: typeNews,
-                            timeout : '1500',
+                            timeout : '1800',
                             theme: 'metroui',
-                            modal: true,
+                            // modal: true,
                             progressBar: false,
                         }).show();
             }
+    }
+
+
+
+    var load = {
+
+        timingRand: function(){
+
+            var rand =  Math.floor((Math.random() * 10000) + 1)
+
+            if(rand > 3000 ){
+                return rand-1000
+            }
+        },
+
+        loading: function($class){
+
+            $('html').find($class).append('<div class="loading ativo"><div class="sk-fading-circle"><div class="sk-circle1 sk-circle"></div><div class="sk-circle2 sk-circle"></div><div class="sk-circle3 sk-circle"></div><div class="sk-circle4 sk-circle"></div><div class="sk-circle5 sk-circle"></div><div class="sk-circle6 sk-circle"></div><div class="sk-circle7 sk-circle"></div><div class="sk-circle8 sk-circle"></div><div class="sk-circle9 sk-circle"></div><div class="sk-circle10 sk-circle"></div><div class="sk-circle11 sk-circle"></div><div class="sk-circle12 sk-circle"></div></div></div>')
+
+            
+        },
+
+        painel: function(panel){
+
+            var request = $('.painel-docs').load('<?php echo base_url() ?>admin/docsLoad/<?php echo $clienteCpfCnpj ?>', function(){
+
+                $('.painel-docs').find('[data-toggle="tooltip"]').tooltip()
+
+                 $('[data-toggle="popover"]').popover({
+                    // trigger:'click manual',
+                    html: true, 
+                    content: function() {
+                          return $('#popover-content').html();
+                        }
+                 }) 
+
+                 if(panel){
+                    console.log(panel)
+
+                    panel.css('background','#f33')
+                    panel.find('i').removeClass('flaticon-arrows-1').addClass('flaticon-error')
+                    $('html,body').animate({scrollTop: panel.offset().top-40},'slow')
+                 }
+            } )            
         }
+    }
         
 
     $(document).ready(function(){
 
-            <?php if(isset($mensagem) ):  ?>
+        <?php if(isset($mensagem) ):  ?>
             app.news('<?php echo $mensagem;?>','success')
-            <?php endif;?>
+        <?php endif;?>
 
-            <?php if(isset($mensagem_erro)):  ?>
+        <?php if(isset($mensagem_erro)):  ?>
             app.news('<?php echo $mensagem_erro;?>','error')
-            <?php endif;?>
+        <?php endif;?>
 
         setTimeout(function() {
             $(".alert-fadeout").fadeOut();
         }, 3000);
 
+    //load painel de documentos
+    load.painel()
+
+
+
+        // if( window.sessionStorage.getItem('open-painel') ){
+        //     var painel = $('[data-painel='+window.sessionStorage.getItem('open-painel')+']') 
+        //     painel.fadeIn().addClass('ativo')
+        //     $('html,body').animate({scrollTop: painel.offset().top},'slow')
+
+        //     window.sessionStorage.removeItem('open-painel')
+        // }
+ 
+ 
+        
+
+        // $('html').on('click', function(){
+        //     $('[data-toggle="popover"]').popover('hide')
+        // })
+
+        $('.painel-docs').on('click', '[data-open-panel]', function(e){
+            e.preventDefault()
+
+            var $this = $(this),
+                id = $this.data('open-panel'),
+                painel = $('[data-panel='+id+']')//,
+                icone = $(this).find('i')            
+
+            if( painel.hasClass('ativo') ){
+                painel.slideToggle().removeClass('ativo')
+                icone.removeClass('flaticon-error').addClass('flaticon-arrows-1')
+                // window.sessionStorage.removeItem('open-panel')
+            }else{
+                // window.sessionStorage.setItem('open-panel',$this)
+                icone.removeClass('flaticon-arrows-1').addClass('flaticon-error')
+                painel.slideToggle().addClass('ativo')
+                $('html,body').animate({scrollTop: painel.offset().top-40},'slow')
+            }
+        })
+
+        $(function () {
+          $('html,body').find('[data-toggle="tooltip"]').tooltip()
+        })
+
+
+        $('input[type=submit],button[type=submit],a.excluir').on('click', function(){
+
+           // $('.loading').fadeIn();
+        })
+
+        $(document).on('keyup',function(e){
+           
+            if(e.keyCode == 27){
+                $('.loading').fadeOut();
+            }
+        });
 
         $('input#cpfcnpj').on('keyup', function(){
 
@@ -65,54 +163,6 @@
                 },2000)
             }
         })
-
-        
-
-        $('input[type=submit],button[type=submit],a.excluir').on('click', function(){
-
-           // $('.loading').fadeIn();
-        })
-
-        $(document).on('keyup',function(e){
-           
-            if(e.keyCode == 27){
-                $('.loading').fadeOut();
-            }
-        });
-
-        // if( window.sessionStorage.getItem('open-painel') ){
-        //     var painel = $('[data-painel='+window.sessionStorage.getItem('open-painel')+']') 
-        //     painel.fadeIn().addClass('ativo')
-        //     $('html,body').animate({scrollTop: painel.offset().top},'slow')
-
-        //     window.sessionStorage.removeItem('open-painel')
-        // }
-
-
-        $('[data-open-panel]').on('click', function(e){
-            e.preventDefault()
-
-            var $this = $(this),
-                id = $this.data('open-panel'),
-                painel = $('[data-panel='+id+']')//,
-                icone = $(this).find('i')
-
-            console.log( icone )             
-
-            if( painel.hasClass('ativo') ){
-                painel.slideToggle().removeClass('ativo')
-                icone.removeClass('flaticon-error').addClass('flaticon-arrows-1')
-                // window.sessionStorage.removeItem('open-panel')
-            }else{
-                // window.sessionStorage.setItem('open-panel',$this)
-                icone.removeClass('flaticon-arrows-1').addClass('flaticon-error')
-                painel.slideToggle().addClass('ativo')
-                $('html,body').animate({scrollTop: painel.offset().top-40},'slow')
-            }
-        })
-
- 
-        
 
     });
 
@@ -365,16 +415,16 @@
                 reader.onloadend = function(){
 
                     $('.upload-process .lista').append( 
-                        '<div class="lista-item-upload animated flipInX doc'+fID+'" >'+
+                        '<div class="lista-item-upload animated flipInX doc'+fID+'"  >'+
                         '<div class="row w-100 align-items-center">'+
                             '<div class="col-12 col-md-4"><input class="form-control" name="doc'+fID+'[docNome]" value="'+file.name+'" type="text"/></div>'+ 
                             '<div class="col-12 col-md-3 text-center"><input class="form-control" name="doc'+fID+'[docVenc]" type="date"/></div>'+
                             '<div class="col-12 col-md-3 text-center"><input class="form-control" name="doc'+fID+'[docComp]" type="month"/></div>'+
                             '<div class="col-12 col-md-1 mt-3 pl-4"> <label class="switch"><input type="checkbox" name="doc'+fID+'[docRec]" value="1"><div class="slider round"></div></label></div>'+
-                            '<div class="col-12 col-md-1 text-right"><i class="flaticon-error font-vermelho"></i></div>'+
+                            '<div class="col-12 col-md-1 text-right"><i class="lista-item-status flaticon-error font-vermelho"></i></div>'+
                             '<div class="row w-100 my-1 mx-0 align-items-center">'+
                                 '<div class="col-11">'+
-                                '<select id="tags" class="tags tags'+fID+'" name="doc'+fID+'[tags]" multiple>'+
+                                '<select id="tags" class="tags tags'+fID+'" name="doc'+fID+'[docTags][]" multiple>'+
                                 '</select>'+
                                 '</div>'+
                             '</div>'+
@@ -411,6 +461,9 @@
         e.stopPropagation();
     })
     .on('dragover dragenter', function() {
+
+        console.log('upload area')
+
         $area.addClass('is-dragover');
     })
     .on('dragleave dragend drop', function() {
@@ -470,9 +523,9 @@
 
     var processUploadFiles = function($url,$class,$data){
 
-        $('.'+$class+' i').removeClass('flaticon-error font-vermelho').addClass('flaticon-cogwheel fa fa-spin')
+        $('.'+$class).find('.lista-item-status').removeClass('flaticon-error font-vermelho').addClass('flaticon-cogwheel fa fa-spin')
 
-        $('.'+$class).css('background: linear-gradient(to right, #4ACC99 0%, #4ACC99 100%, #4ACC99 0%, #e5e5e5 0%, #e5e5e5 100%)')
+        //$('.'+$class).css('background: linear-gradient(to right, #4ACC99 0%, #4ACC99 100%, #4ACC99 0%, #e5e5e5 0%, #e5e5e5 100%)')
 
         $.ajax({
             url: $url,
@@ -510,31 +563,40 @@
         })
         .done(function(r){
             console.log('success')
-            console.log(r)
-
             if(r.status == true ){
-                $('.'+$class+' i').removeClass('fa fa-spin flaticon-cogwheel font-vermelho').addClass('animated bounceIn flaticon-success font-verde')
+                $('.'+$class).find('.lista-item-status').removeClass('fa fa-spin flaticon-cogwheel font-vermelho').addClass('animated bounceIn flaticon-success font-verde')
 
-                $('.'+$class+' input').attr('name','')
+                $('.'+$class+' input').attr('disabled','disabled')
+
+
+                    load.loading( $('.painel-docs').parents('.painel') )
+
+                    load.painel()
+
+                    setTimeout( function(){
+                        $('.painel-docs').parents('.painel').find('.loading').addClass('animated fadeOut').removeClass('ativo')
+                    },1000)
+
+                $('.upload-process').html()
 
             }
 
             if(r.status == false ){
-                 $('.'+$class+' i').removeClass('fa fa-spin flaticon-cogwheel font-vermelho').addClass('flaticon-warning font-vermelho')
+                 $('.'+$class).find('.lista-item-status').removeClass('fa fa-spin flaticon-cogwheel font-vermelho').addClass('flaticon-warning font-vermelho')
             }
         })
         .fail(function(r){
             console.log('erro')           
-            console.log(r)
+            console.log(r.responseText)
         })
     }
 
-    $('#upload-arquivo button[type=submit]').on('click', function(e){
+    $('#upload-docs button[type=submit]').on('click', function(e){
         e.preventDefault();
 
         var $form = $(this).parents('form'),
             $url = $form.attr('action'),
-            $data = $form.find('input').not('[value=""]').serializeJSON()
+            $data = $form.serializeJSON()
 
         $.each($data, function(i,f){
                 
@@ -542,6 +604,139 @@
 
         })
     })
+
+    $('html').on('click', '.popover button.modItemRec', function(){       
+
+        var $this = $(this),
+            input = $this.parents().find('input'),
+            destino = input.data('destino'),
+            row = input.data('row'),
+            id = input.data('rowid'),
+            name = input.attr('name'),
+            value = input.val(),
+            panel = $('.painel-docs').find('[data-panel='+input.data('open-panel')+']') 
+
+            $.post(ajaxUrl+'updateItemRec', {name:name,value:value,destino:destino,row:row,id:id}, function(r){
+
+                console.log(r)
+
+                if(r.status==true){
+
+                    load.loading( $('.painel-docs').parents('.painel') )
+
+                    load.painel(panel)
+
+                    setTimeout( function(){
+                        $('.painel-docs').parents('.painel').find('.loading').addClass('animated fadeOut').removeClass('ativo')
+                    },1000)
+                
+                }
+
+                if(r.status==false){
+
+                    app.news('Erro.'+ r.message, 'error')
+                }
+
+
+            },'json')
+            .fail(function(r){
+
+                console.log(r)
+            })
+            .always(function(){               
+
+                app.news('Vencimento modificado', 'success')
+
+            })
+    })
+
+
+
+
+
+
+    var processUploadRec = function($dom,docID,file,filename){
+
+        $('.'+$class).find('.lista-item-status').removeClass('flaticon-error font-vermelho').addClass('flaticon-cogwheel fa fa-spin')
+
+        $data = {docID:docID,file:file,filename:filename}
+
+        $.ajax({
+            url: $url,
+            type: 'POST',
+            data: $data,
+            dataType: 'json',
+            xhr: function(){
+                var xhr = new window.XMLHttpRequest();
+                 // Handle progress
+                 //Upload progress
+                xhr.upload.addEventListener("progress", function(evt){
+
+                    console.log(evt)
+
+                   if (evt.lengthComputable) {
+                      var percentComplete = (evt.loaded / evt.total)*100 ;
+                      //Do something with upload progress
+                      console.log(percentComplete);
+                   }
+                }, false);
+                //Download progress
+                xhr.addEventListener("progress", function(evt){
+                    if (evt.lengthComputable) {
+                      var percentComplete = evt.loaded / evt.total;
+                      //Do something with download progress
+                      console.log(percentComplete);
+                    }
+                }, false);
+
+               return xhr;
+            },
+            complete:function(){
+                console.log("Request finished.");
+            }
+        })
+        .done(function(r){
+            console.log('success')
+            if(r.status == true ){
+                $('.'+$class).find('.lista-item-status').removeClass('fa fa-spin flaticon-cogwheel font-vermelho').addClass('animated bounceIn flaticon-success font-verde')
+
+                $('.'+$class+' input').attr('disabled','disabled')
+
+            }
+
+            if(r.status == false ){
+                 $('.'+$class).find('.lista-item-status').removeClass('fa fa-spin flaticon-cogwheel font-vermelho').addClass('flaticon-warning font-vermelho')
+            }
+        })
+        .fail(function(r){
+            console.log('erro')           
+            console.log(r.responseText)
+        })
+    }
+
+    var $recItem = $('.painel-docs')
+
+    $recItem.on('drag dragstart dragend dragover dragenter dragleave drop', '.lista-item-doc', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+    })
+    .on('dragover dragenter', '.lista-item-doc', function() {
+
+        $(this).addClass('is-dragover');
+    })
+    .on('dragleave dragend drop', '.lista-item-doc', function() {
+        $(this).removeClass('is-dragover');
+    })
+    .on('drop', '.lista-item-doc', function(e) {
+
+        var $this = $(this),
+            docID = $this.data('doc')
+
+
+        processUploadRec();
+    });
+
+
 
     <?php endif; ?>
 

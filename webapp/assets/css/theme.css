@@ -385,26 +385,31 @@ click-wave { 0% {
 	margin-left:20px;
 }
 
+.overflow-hidden{
+	overflow: hidden;
+}
 .loading{
 	width: 100%;
 	height: 100%;
-	position: fixed;
+	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: 99999999999999999;
-	background: rgba(168,11,11,0.6);
+	background: rgba(0,113,188,0.6);
 	display: none;
 }
- 
+.loading.ativo{
+	display: block;
+}
 .sk-fading-circle {
   margin-left:auto;
   margin-right: auto;
-  margin-top: -60px;
-  margin-bottom:-60px;
-  top: 50%;
+  margin-top: -30px;
+  margin-bottom:-30px;
+  top: 55%;
   bottom: 50%;
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   position: relative;
 }
 
@@ -816,8 +821,9 @@ body{
 	color:#333;
 	margin-bottom: 15px;
 	border-bottom:1px solid #dfe5f2;
-	padding:10px 0;
+	padding:16px 0;
 	font-size:0.8rem;
+	position: relative;
 }
 .lista-item-doc i{
 	font-size:20px;
@@ -840,6 +846,24 @@ body{
 	border-radius:5px;
 	background:#eee;
 	margin-right:3px;
+}
+
+.lista-item-doc.is-dragover:after{
+	content:'Solte para enviar o novo documento';
+	background: rgba(255,255,255,0.9);
+	border: 3px #dfe5f2 dashed;
+	border-radius: 5px;
+	color: #9ca0a9;
+	font-size:0.9rem;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	line-height: 2rem;
+	padding:10px;
+	animation-name: bounceIn
 }
 
 .upload-process{

@@ -146,12 +146,12 @@ class Form extends CI_Controller {
 
  	public function uploadDocS3($cliente){
 
- 		echo var_dump($this->input->post() );
- 		return;
+ 		// echo json_encode($this->input->post() );
+ 		// return;
  		
  		$nome 		= $this->input->post('docNome');
- 		$tags 		= (object) $this->input->post('tags');
- 		$vencimento = $this->input->post('docVrsVenc');
+ 		$tags 		= $this->input->post('docTags');
+ 		$vencimento = $this->input->post('docVenc');
 
  		$filename 	= $this->input->post('filename');
  		$file 		= explode(",", $this->input->post('file') );
@@ -182,28 +182,29 @@ class Form extends CI_Controller {
 	 			$insertFile['docRec'] = 0;
 	 		}
 
-			if($this->input->post('docCompetencia') != '0000-00-00' ){
-	 			$insertFile['docCompetencia'] = $this->input->post('docCompetencia');
+			if($this->input->post('docComp') != '' ){
+	 			$insertFile['docCompetencia'] = $this->input->post('docComp');
 	 		}
 
-		 	$saveFile = $this->db->insert('clientes_arquivo', $insertFile );
+		 	$saveFile = $this->db->insert('documentos', $insertFile );
 		 	$docID = $this->db->insert_id();
 
 		 	if($saveFile){
 
 		 		//SAVE TAGS
-		 		foreach($tags as $tag){
-		 			$this->db->insert('documentos_tags', array('docID'=>$docID,'tagID'=>$tag->tagID ));
+		 		foreach($tags as $key=>$tag){
+		 			$this->db->insert('documentos_tags', array('docID'=>$docID,'tagID'=>$tag  ));
 		 		}
 
 		 		$insertVrs = array(
-		 			'docID'=$docID,
-		 			'docVrsAwsKey'=>$key,
+		 			'docID'=>$docID,
+		 			'docVrsAwsKey'=>$keyName,
 		 			'docVrsCaminho'=>$caminho,
-		 			'docVrsDataEnvio'=>date('Y-m-d H:i:s')
+		 			'docVrsDataEnvio'=>date('Y-m-d H:i:s'),
+
 		 			);
 
-		 		if($vencimento != '0000-00-00'){
+		 		if($vencimento != ''){
 		 			$insertVrs['docVrsVenc'] = $vencimento;
 		 		}
 
@@ -232,12 +233,12 @@ class Form extends CI_Controller {
  	}
 
 
- 	public function uploadRecDocS3($cliente){
+ 	public function uploadRecDocS3(){
+
+ 		$docID = $this->input->post('docID');
 
  		$filename 	= $this->input->post('filename');
  		$file 		= explode(",", $this->input->post('file') );
- 		$nome 		= $this->input->post('nome');
-
  		$keyName 	= md5($filename).rand(5,15);
 
  		$bucket 	= 'dashcont';
@@ -249,28 +250,51 @@ class Form extends CI_Controller {
 		$caminho 	= $upload->get('ObjectURL');
 
 		if($upload){
-			$this->db->where('clienteCpfCnpj',$cliente);
-	 		$clienteID = $this->db->get('clientes')->row()->clienteID;
-	 		
 
-			$insert = array(
-				'clienteID'=>$clienteID,
-				'docNome'=>$nome,
-				'docAwsKey'=>$keyName,
-				'docCaminho'=>$caminho,
-				'docDataEnvio'=>date('Y-m-d H:i:s')
+			$insertFile = array(
+				'docDataUltAlt'=>date('Y-m-d H:i:s'),
 				);
 
-		 	$this->db->insert('clientes_arquivo', $insert );
+			$this->db->where('docID',$docID);
+		 	$saveFile = $this->db->update('documentos', $insertFile );
+		 	$docID = $this->db->insert_id();
 
-		 	echo json_encode( array('status'=>TRUE ) );
-		 	return;
+		 	if($saveFile){
+
+		 		$insertVrs = array(
+		 			'docID'=>$docID,
+		 			'docVrsAwsKey'=>$keyName,
+		 			'docVrsCaminho'=>$caminho,
+		 			'docVrsDataEnvio'=>date('Y-m-d H:i:s'),
+		 			);
+
+		 		if($vencimento != ''){
+		 			$insertVrs['docVrsVenc'] = $vencimento;
+		 		}
+
+		 		$saveVersao = $this->db->insert('documentos_versao', $insertVrs );
+
+		 		if($saveVersao){
+
+		 			echo json_encode( array('status'=>TRUE ) );
+		 			return;
+		 		}else{
+
+		 			echo json_encode( array('status'=>FALSE,'mesage'=>'Caminho não recuperado' ) );
+		 			return;
+		 		}
+
+		 	}else{
+		 		echo json_encode( array('status'=>FALSE,'mesage'=>'O upload foi feito mas não foi salvo' ) );
+		 		return;
+		 	}	 	
 
 		 }else{
 
-		 	echo json_encode( array('status'=>FALSE ) );
+		 	echo json_encode( array('status'=>FALSE,'mesage'=>'O upload para a nuvem falhou' ) );
 		 	return;
-		 }	 	
+		 }
+
  	}
 
 

@@ -67,4 +67,29 @@ class Ajax_functions extends CI_Controller {
 		echo json_encode($result->result() );
 		return;
 	}
+
+
+	public function updateItemRec(){
+
+		$campos = $this->input->post();
+
+		$this->db->where($campos['row'],$campos['id']);
+		$update = $this->db->update($campos['destino'], array(
+			$campos['name']=>$campos['value']
+			));
+
+		if($update){
+
+			echo json_encode(array('status'=>true));
+			return;
+		}else{
+			echo json_encode(array('status'=>false));
+			return;
+		}
+	}
+
+	public function insertRec(){
+
+		
+	}	
 }
