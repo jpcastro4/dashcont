@@ -134,6 +134,7 @@ class Admin_model extends CI_Model{
     public function docVersao($docID){
 
         $this->db->where('docID',$docID);
+        $this->db->order_by('docVrsDataEnvio','DESC');
         $result = $this->db->get('documentos_versao')->result();
 
         return $result;

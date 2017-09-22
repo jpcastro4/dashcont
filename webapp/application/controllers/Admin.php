@@ -109,6 +109,8 @@ class Admin extends CI_Controller {
 		$data['titulo_2'] = 'Cliente';
 		$data['arquivo'] = true;
 
+		$data['clienteCpfCnpj'] = $clienteCpfCnpj;
+
 		$data['cliente'] = $this->admin->getCliente($clienteCpfCnpj);
 
 		$data['mensagem'] = $this->session->flashdata('mensagem');
@@ -141,15 +143,7 @@ class Admin extends CI_Controller {
         $this->load->view('admin/templates/footer');
 	}
 
-	public function docsLoad($clienteCpfCnpj){
-
-		$this->db->where('clienteCpfCnpj',$clienteCpfCnpj);
-		$clienteID = $this->db->get('clientes')->row()->clienteID;
-
-		$data['documentos'] = $this->admin->getDocumentos($clienteID);
-
-		$this->load->view('admin/ajax/documentos',$data );
-	}
+	
 
 	public function sair(){
 

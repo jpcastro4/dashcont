@@ -160,16 +160,26 @@ class Form extends CI_Controller {
  		// return;
  		
  		$nome 		= $this->input->post('docNome');
- 		$tags 		= $this->input->post('docTags');
+ 		$tags 		= (object) $this->input->post('docTags');
  		$vencimento = $this->input->post('docVenc');
+ 		$recalculo	= $this->input->post('docRec');
 
  		$filename 	= $this->input->post('filename');
  		$file 		= explode(",", $this->input->post('file') );
  		$keyName 	= md5($filename).rand(5,15);
 
  		$bucket 	= 'dashcont';
-		$key 		= $cliente.'/'.$keyName;
+		$key 		= $cliente.'/'.$keyName.'.pdf';
 		$fileData 	= base64_decode( end($file) );
+
+		// echo var_dump($tags);
+		// return;
+
+		if(empty($tags)){
+
+			echo json_encode(array('status' => false,'message'=>'Escolha pelo menos uma tag para o item' ) );
+			return;
+		}
 
  		$client 	= $this->awsCredential();		
 		$upload 	= $client->upload($bucket, $key, $fileData, 'public-read');
@@ -186,7 +196,7 @@ class Form extends CI_Controller {
 				'docDataUltAlt'=>date('Y-m-d H:i:s'),
 				);
 
-			if( !empty($this->input->post('docRec') ) ){
+			if( !empty($recalculo) ){
 	 			$insertFile['docRec'] = 1;
 	 		}else{
 	 			$insertFile['docRec'] = 0;
@@ -202,7 +212,7 @@ class Form extends CI_Controller {
 		 	if($saveFile){
 
 		 		//SAVE TAGS
-		 		foreach($tags as $key=>$tag){
+		 		foreach($tags as $tag){
 		 			$this->db->insert('documentos_tags', array('docID'=>$docID,'tagID'=>$tag  ));
 		 		}
 
@@ -243,9 +253,21 @@ class Form extends CI_Controller {
  	}
 
 
- 	public function uploadRecDocS3(){
+ 	public function uploadRecDocS3($cliente){
 
- 		$docID = $this->input->post('docID');
+ 		$docID =  $this->input->post('docID');
+ 		$vencimento = $this->input->post('docVenc');
+
+ 		if(empty($docID)){
+ 			echo json_encode(array('status'=>FALSE,'message'=>'Doc ID vazio'));
+ 			return; 			
+ 		}
+
+ 		if(empty($vencimento)){
+
+ 			echo json_encode(array('status'=>FALSE,'message'=>'Defina o vencimento'));
+ 			return;
+ 		}
 
  		$filename 	= $this->input->post('filename');
  		$file 		= explode(",", $this->input->post('file') );
@@ -267,7 +289,6 @@ class Form extends CI_Controller {
 
 			$this->db->where('docID',$docID);
 		 	$saveFile = $this->db->update('documentos', $insertFile );
-		 	$docID = $this->db->insert_id();
 
 		 	if($saveFile){
 

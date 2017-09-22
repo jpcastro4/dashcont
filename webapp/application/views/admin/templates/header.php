@@ -39,7 +39,7 @@
 
     </head>
 
-    <body class=" ">
+    <body class="clearfix relative">
         <div class="loading ">
             <div class="sk-fading-circle">
                 <div class="sk-circle1 sk-circle"></div>

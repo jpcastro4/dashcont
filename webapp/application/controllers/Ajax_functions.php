@@ -68,6 +68,15 @@ class Ajax_functions extends CI_Controller {
 		return;
 	}
 
+	public function docsLoad($clienteCpfCnpj,$ano=null,$mes=null,$filtro=null){
+
+		$this->db->where('clienteCpfCnpj',$clienteCpfCnpj);
+		$clienteID = $this->db->get('clientes')->row()->clienteID;
+
+		$data['documentos'] = $this->admin->getDocumentos($clienteID,$ano,$mes,$filtro);
+
+		$this->load->view('admin/ajax/documentos',$data );
+	}
 
 	public function updateItemRec(){
 
@@ -88,8 +97,16 @@ class Ajax_functions extends CI_Controller {
 		}
 	}
 
-	public function insertRec(){
 
-		
+
+	public function insertView($docID){
+
+		$this->db->where('docVrsID',$docID);
+		$doc = $this->db->get('documentos_versao')->row();
+
+		$this->db->update('documentos_versao',array('docVrsID'=>$docID,'docVrsOpens'=>$doc->docVrsOpens+1));
+
+		echo json_encode(array('status'=>true,'url'=>$doc->docVrsCaminho ));
+		return;
 	}	
 }

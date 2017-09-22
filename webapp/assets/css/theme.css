@@ -607,7 +607,7 @@ body{
 }
 .header h1{
 	font-weight: 300;
-	font-size:30px;
+	font-size:25px;
 	display: inline-flex;
 }
 .header .cnpj{
@@ -692,6 +692,9 @@ body{
 	text-align: right;
 }
 
+.upload-docs-family{
+	display: none;
+}
  
 .upload-area{
 	text-align: center;
@@ -770,36 +773,32 @@ body{
 .calendario{
 	color:#808080;
 }
-.calendario:after{
-	content:"\f100";
-	font-family: Flaticon;
-	font-style: normal;
-	font-size:12px;
-	padding:0 15px;
-	position: relative;
-    top: -5px;
-}
-.calendario:before{
-	content:"\f102";
-	font-family: Flaticon;
-	font-style: normal;
-	font-size:12px;
-	padding:0 15px;
-	position: relative;
-    top: -5px;
-}
-.calendario:hover:after{
-	right:-5px;
-}
-.calendario:hover:before{
-	left:-5px;
-}
 .calendario.ano{
 	font-size:22px;
 }
 .calendario.mes{
 	font-size:30px;
 	font-weight: 900;
+}
+
+.calendario .down, .calendario .up{
+	font-size:12px;
+	padding:0 15px;
+	position: relative;
+    top: -5px;
+    cursor: pointer;
+}
+.calendario .months{
+	display: none;
+}
+.calendario .months.mcurrent{
+	display: inline-block;
+}
+.calendario .up:hover{
+	right:-5px;
+}
+.calendario .down:hover{
+	left:-5px;
 }
 
 .filtros{
@@ -819,7 +818,7 @@ body{
 
 .lista-item-doc{
 	color:#333;
-	margin-bottom: 15px;
+	/*margin-bottom: 15px;*/
 	border-bottom:1px solid #dfe5f2;
 	padding:16px 0;
 	font-size:0.8rem;
@@ -831,9 +830,12 @@ body{
 	padding:0 10px;
 }
 .lista-item-doc-painel{
-	padding:20px;
+	padding:15px;
 	background: #f8f8f8;
 	display: none;
+}
+.lista-item-doc-painel.ativo{
+	display: block;
 }
 .lista-item-doc .track i{
 	font-size:0.9rem !important;
@@ -846,6 +848,8 @@ body{
 	border-radius:5px;
 	background:#eee;
 	margin-right:3px;
+	margin-bottom:3px;
+	display: inline-block;
 }
 
 .lista-item-doc.is-dragover:after{
@@ -865,17 +869,21 @@ body{
 	padding:10px;
 	animation-name: bounceIn
 }
-
-.upload-process{
+.lista-item-doc-painel .lista-item-doc{
+	padding:12px 0;
+	font-size:0.75rem;
+}
+.upload-process, .upload-process-rec{
+	animation: fadeOut;
 	display: none;
 }
-.upload-process.ativo{
+.upload-process.ativo, .upload-process-rec.ativo{
+	animation: fadeIn;
 	display: block;
 }
-.upload-process input[type=date].form-control, .upload-process input[type=month].form-control{
+.upload-process input[type=date].form-control, .upload-process input[type=month].form-control, .upload-process-rec input[type=date].form-control, .upload-process-rec input[type=month].form-control{
 	width: max-content;
 }
-
 
 
 
