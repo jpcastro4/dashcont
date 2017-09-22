@@ -69,6 +69,13 @@ $route['admin/configuracoes/bloqueios/(:num)'] = 'admin/bloqueios/$1';
 $route['admin/configuracoes/tags'] = 'admin/tags';
 $route['admin/configuracoes/tags/(:num)'] = 'admin/tags/$1';
 
+$route['ajax_functions/docsLoad/(:any)/(:any)/(:any)/(:any)'] = 'ajax_functions/docsLoad/$1/$2/$3/$4';
+$route['ajax_functions/docsLoad/(:any)/(:any)/(:any)'] = 'ajax_functions/docsLoad/$1/$2/$3';
+$route['ajax_functions/docsLoad/(:any)/(:any)'] = 'ajax_functions/docsLoad/$1/$2';
+$route['ajax_functions/docsLoad/(:any)'] = 'ajax_functions/docsLoad/$1';
+
+
+
 $route['admin/clientes'] = 'admin/clientes';
 $route['admin/cliente/(:num)/cadastro'] = 'admin/cliente/$1';
 $route['admin/cliente/(:num)/documentos'] = 'admin/cliente_documentos/$1';

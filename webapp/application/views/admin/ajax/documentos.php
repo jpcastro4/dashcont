@@ -50,7 +50,7 @@
                                 <?php $o = 1; foreach($this->admin->docVersao($documento->docID) as $versao ): ?>
                                 <div class="lista-item-doc row">
                                     <div class="col-12 col-md-2"><?php echo $o++ ?></div>
-                                    <div class="col-12 col-md-2 px-0"><?php echo date('d/m/Y H:m:s', strtotime($versao->docVrsDataEnvio))?></div>
+                                    <div class="col-12 col-md-2 px-0"><?php echo date('d/m/Y H:i:s', strtotime($versao->docVrsDataEnvio))?></div>
                                     <div class="col-12 col-md-2 track ">
                                         <span class="view" data-toggle="tooltip" data-placement="top" title="Visualizações" ><?php echo $versao->docVrsOpens ?> <i class="flaticon-visibility"></i></span> <span class="print" data-toggle="tooltip" data-placement="top" title="Impressões"><?php echo $versao->docVrsPrints ?> <i class="flaticon-technology-1"></i></span>
                                     </div>

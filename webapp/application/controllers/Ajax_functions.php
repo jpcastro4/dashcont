@@ -73,7 +73,12 @@ class Ajax_functions extends CI_Controller {
 		$this->db->where('clienteCpfCnpj',$clienteCpfCnpj);
 		$clienteID = $this->db->get('clientes')->row()->clienteID;
 
-		$data['documentos'] = $this->admin->getDocumentos($clienteID,$ano,$mes,$filtro);
+		$data['documentos'] = $this->admin->getDocumentos($clienteID,$ano,$mes);
+
+		if(!empty($filtro)){
+
+			$data['filtro'] = $filtro;
+		}
 
 		$this->load->view('admin/ajax/documentos',$data );
 	}

@@ -205,6 +205,9 @@ class Form extends CI_Controller {
 			if($this->input->post('docComp') != '' ){
 	 			$insertFile['docCompetencia'] = $this->input->post('docComp');
 	 		}
+	 		// else{
+	 		// 	$insertFile['docCompetencia'] = date('Y-m')
+	 		// }
 
 		 	$saveFile = $this->db->insert('documentos', $insertFile );
 		 	$docID = $this->db->insert_id();

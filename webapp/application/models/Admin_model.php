@@ -151,7 +151,17 @@ class Admin_model extends CI_Model{
         return false;
     }
 
-    public function getDocumentos($clienteID){
+    public function getDocumentos($clienteID,$ano=null,$mes=null){
+
+        if(!empty($ano)){
+            //$this->db->where("DATE_FORMAT(docCompetencia,'%Y')",$ano);
+            //$this->db->select("EXTRACT(YEAR from docCompetencia) AS ano");
+            $this->db->where("EXTRACT(YEAR from docCompetencia)", $ano);
+        }
+
+        if(!empty($mes)){
+            $this->db->where("DATE_FORMAT(docCompetencia,'%m')",$mes);
+        }
 
         $this->db->where('clienteID',$clienteID);
         $docs = $this->db->get('documentos')->result();

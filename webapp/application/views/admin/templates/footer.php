@@ -21,7 +21,7 @@
 
     var urls = {
 
-        docsLoad: globalItems.urlSite+'ajax_functions/docsLoad/'+globalItems.clienteCpfCnpj,
+        docsLoad: globalItems.urlSite+'ajax_functions/docsLoad/'+globalItems.clienteCpfCnpj+'/2016',
         docsUpload: globalItems.urlSite+'form/uploadDocS3/'+globalItems.clienteCpfCnpj,
         docsRecUpload: globalItems.urlSite+'form/uploadRecDocS3/'+globalItems.clienteCpfCnpj,
         getTags: globalItems.urlSite+'ajax_functions/getTags'
